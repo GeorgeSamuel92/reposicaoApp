@@ -2,13 +2,11 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import Axios from "axios";
 import Card from "./componenets/cards/card";
-// import { response } from "express";
 
 function App() {
   const [values, setValues] = useState();
   const [listGames, setListGames] = useState();
 
-  console.log(listGames);
 
   const handleChangeValues = (value) => {
     setValues((prevValue) => ({
@@ -27,21 +25,17 @@ function App() {
     });
   };
 
-  // useEffect(() => {
-  //   Axios.get("http://localhost:3001/getCards").then((response) => {
-  //     setListGames(response.data);
-  //   });
-  // }, []);
-
   useEffect(() => {
-    Axios.get("http://localhost:3001/getCards").then((response) => {
-      console.log("Dados recebidos do servidor:", response.data);
-      setListGames(response.data);
-    }).catch((error) => {
-      console.error("Erro ao buscar dados:", error);
-    });
+    Axios.get("http://localhost:3001/getCards")
+      .then((response) => {
+        // console.log("Dados recebidos do servidor:", response.data);
+        setListGames(response.data);
+      })
+      .catch((error) => {
+        console.error("Erro ao buscar dados:", error);
+      });
   }, []);
-  
+
   return (
     <div className="app--container">
       <div className="register--container">
@@ -74,11 +68,10 @@ function App() {
           Cadastrar
         </button>
       </div>
-      { typeof listGames !== "undefined" &&
+      {typeof listGames !== "undefined" &&
         listGames.map((value) => {
           return <Card></Card>;
         })}
-
     </div>
   );
 }
